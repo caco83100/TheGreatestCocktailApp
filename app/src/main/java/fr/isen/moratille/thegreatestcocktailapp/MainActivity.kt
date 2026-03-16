@@ -11,6 +11,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import fr.isen.moratille.thegreatestcocktailapp.screens.Cocktail
+import fr.isen.moratille.thegreatestcocktailapp.screens.DetailCocktailScreen
 import fr.isen.moratille.thegreatestcocktailapp.ui.theme.TheGreatestCocktailAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,28 +22,27 @@ class MainActivity : ComponentActivity() {
         setContent {
             TheGreatestCocktailAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                   DetailCocktailScreen(
+                       cocktail = sampleCocktail
+                   )
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    TheGreatestCocktailAppTheme {
-        Greeting("Android")
-    }
-}
+//pour tester :
+val sampleCocktail = Cocktail(
+    name = "Mojito",
+    imageRes = R.drawable.imagecocktail, // Use the drawable found in the project
+    categories = listOf("Alcoholic", "Refreshing", "Summer"),
+    glassType = "Highball glass",
+    ingredients = listOf(
+        "50ml White Rum",
+        "15ml Fresh Lime Juice",
+        "2 tsp Sugar",
+        "6-8 Mint Leaves",
+        "Soda Water"
+    ),
+    recipe = "Muddle mint leaves with sugar and lime juice. Add rum and top with soda water. Garnish with mint sprig and lime slice."
+)
