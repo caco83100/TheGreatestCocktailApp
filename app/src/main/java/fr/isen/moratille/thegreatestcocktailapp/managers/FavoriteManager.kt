@@ -4,6 +4,7 @@ import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import fr.isen.moratille.thegreatestcocktailapp.dataClasses.Drink
+import androidx.core.content.edit
 
 data class Favorites (
     @SerializedName("favorites")
@@ -31,15 +32,15 @@ class FavoritesManager {
         )
         if (favorites == null) {
             sharedPreferences
-                .edit()
-                .putString(
-                    "favorites",
-                    Gson().toJson(mutableListOf(drink))
-                )
-                .apply()
+                .edit {
+                    putString(
+                        "favorites",
+                        Gson().toJson(mutableListOf(drink))
+                    )
+                }
             return
         }
-        var list = Gson().fromJson(favorites, Array<Drink>::class.java).toMutableList()
+        val list = Gson().fromJson(favorites, Array<Drink>::class.java).toMutableList()
 
         if(list.firstOrNull() { it.idDrink == drink.idDrink } != null) {
             // Remove
@@ -50,12 +51,12 @@ class FavoritesManager {
         }
 
         sharedPreferences
-            .edit()
-            .putString(
-                "favorites",
-                Gson().toJson(list)
-            )
-            .apply()
+            .edit {
+                putString(
+                    "favorites",
+                    Gson().toJson(list)
+                )
+            }
     }
 
     fun isFavorite(drink: Drink, context: Context): Boolean {
