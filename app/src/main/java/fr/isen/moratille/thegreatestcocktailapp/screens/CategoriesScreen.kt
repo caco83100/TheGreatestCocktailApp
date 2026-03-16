@@ -42,7 +42,7 @@ fun CategoriesScreen(
 
             items(categories) { categoryName ->
                 // Recherche de la catégorie correspondante dans l'Enum pour les couleurs
-                val categoryEnum = Category.values().find { Category.toString(it) == categoryName } ?: Category.OTHER
+                val categoryEnum = Category.entries.find { Category.toString(it) == categoryName } ?: Category.OTHER
 
                 CategoryCard(
                     categoryName = categoryName,
