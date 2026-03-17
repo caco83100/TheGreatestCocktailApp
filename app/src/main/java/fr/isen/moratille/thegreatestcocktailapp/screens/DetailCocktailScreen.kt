@@ -1,5 +1,6 @@
 package fr.isen.moratille.thegreatestcocktailapp.screens
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
@@ -11,11 +12,14 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import fr.isen.moratille.thegreatestcocktailapp.dataClasses.Drink
+import fr.isen.moratille.thegreatestcocktailapp.ui.theme.GlassBorder
+import fr.isen.moratille.thegreatestcocktailapp.ui.theme.GlassWhite
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -27,12 +31,14 @@ fun DetailCocktailScreen(
     onFavoriteClick: (() -> Unit)? = null,
     onRefreshClick: (() -> Unit)? = null
 ) {
+    // On rend le Scaffold transparent pour voir l'image de fond
     Scaffold(
+        containerColor = Color.Transparent,
         topBar = {
             if (showTopBar) {
                 TopAppBar(
                     colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                        containerColor = Color.Transparent, // Barre transparente
                         titleContentColor = MaterialTheme.colorScheme.primary,
                     ),
                     title = {
@@ -84,7 +90,10 @@ fun DetailCocktailScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(300.dp),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                    shape = MaterialTheme.shapes.extraLarge,
+                    colors = CardDefaults.cardColors(containerColor = GlassWhite),
+                    border = BorderStroke(1.dp, GlassBorder),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                 ) {
                     AsyncImage(
                         model = drink.strDrinkThumb,
@@ -99,6 +108,7 @@ fun DetailCocktailScreen(
                 Text(
                     text = drink.strDrink ?: "",
                     style = MaterialTheme.typography.headlineLarge,
+                    color = Color.White,
                     fontWeight = FontWeight.Bold
                 )
             }
@@ -107,7 +117,12 @@ fun DetailCocktailScreen(
                 drink.strCategory?.let {
                     SuggestionChip(
                         onClick = { },
-                        label = { Text(it) }
+                        label = { Text(it) },
+                        colors = SuggestionChipDefaults.suggestionChipColors(
+                            containerColor = GlassWhite,
+                            labelColor = Color.White
+                        ),
+                        border = BorderStroke(1.dp, GlassBorder)
                     )
                 }
             }
@@ -116,25 +131,30 @@ fun DetailCocktailScreen(
                 Text(
                     text = "Glass: ${drink.strGlass ?: "Standard"}",
                     style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.secondary
+                    color = MaterialTheme.colorScheme.primary // Utilisation du orange pour le contraste
                 )
             }
 
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+                    shape = MaterialTheme.shapes.extraLarge,
+                    colors = CardDefaults.cardColors(containerColor = GlassWhite),
+                    border = BorderStroke(1.dp, GlassBorder),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text(
                             text = "Ingredients",
                             style = MaterialTheme.typography.titleLarge,
+                            color = MaterialTheme.colorScheme.primary,
                             fontWeight = FontWeight.SemiBold
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         drink.ingredientList().forEach { (ingredient, measure) ->
                             Text(
                                 text = "• $ingredient ${if (measure.isNotEmpty()) "- $measure" else ""}",
+                                color = Color.White,
                                 style = MaterialTheme.typography.bodyMedium
                             )
                         }
@@ -145,17 +165,22 @@ fun DetailCocktailScreen(
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+                    shape = MaterialTheme.shapes.extraLarge,
+                    colors = CardDefaults.cardColors(containerColor = GlassWhite),
+                    border = BorderStroke(1.dp, GlassBorder),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text(
                             text = "Recipe",
                             style = MaterialTheme.typography.titleLarge,
+                            color = MaterialTheme.colorScheme.primary,
                             fontWeight = FontWeight.SemiBold
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
                             text = drink.strInstructions ?: "No instructions available.",
+                            color = Color.White,
                             style = MaterialTheme.typography.bodyMedium
                         )
                     }

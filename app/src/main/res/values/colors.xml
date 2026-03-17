@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Basic Colors -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Cocktail App Dark Theme Palette -->
+    <color name="dark_background">#0F0E0E</color>
+    <color name="card_background">#1C1C1E</color>
+    <color name="primary_orange">#D17842</color>
+    <color name="secondary_orange">#523321</color>
+    <color name="accent_orange">#E57734</color>
+    <color name="text_gray">#919293</color>
+    <color name="surface_gray">#252A32</color>
+
+    <!-- Glassmorphism Colors -->
+    <color name="glass_white">#1AFFFFFF</color> <!-- 10% white -->
+    <color name="glass_white_strong">#33FFFFFF</color> <!-- 20% white -->
+    <color name="glass_border">#4DFFFFFF</color> <!-- 30% white border -->
+
+    <!-- Previous colors for compatibility if needed -->
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-
-    <!-- Cocktail App Colors -->
-    <color name="cocktail_orange">#FFFF9800</color>
-    <color name="cocktail_dark_orange">#FFF57C00</color>
-    <color name="cocktail_yellow">#FFFFEB3B</color>
-    <color name="cocktail_pink">#FFE91E63</color>
 </resources>

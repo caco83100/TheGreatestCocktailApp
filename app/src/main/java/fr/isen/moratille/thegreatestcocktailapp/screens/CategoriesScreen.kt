@@ -1,5 +1,6 @@
 package fr.isen.moratille.thegreatestcocktailapp.screens
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -9,12 +10,13 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import fr.isen.moratille.thegreatestcocktailapp.models.Category
+import fr.isen.moratille.thegreatestcocktailapp.ui.theme.GlassBorder
+import fr.isen.moratille.thegreatestcocktailapp.ui.theme.GlassWhite
+import fr.isen.moratille.thegreatestcocktailapp.ui.theme.PrimaryOrange
 
 @Composable
 fun CategoriesScreen(
@@ -22,31 +24,38 @@ fun CategoriesScreen(
     onCategoryClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Scaffold { innerPadding ->
+    // On rend le Scaffold transparent pour voir le fond d'écran de l'activité
+    Scaffold(
+        containerColor = Color.Transparent
+    ) { innerPadding ->
         LazyColumn(
             modifier = modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = PaddingValues(vertical = 16.dp)
+                .padding(horizontal = 24.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            contentPadding = PaddingValues(vertical = 24.dp)
         ) {
             item {
-                Text(
-                    text = "Categories",
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(bottom = 8.dp)
-                )
+                Column(modifier = Modifier.padding(bottom = 8.dp)) {
+                    Text(
+                        text = "Find the best",
+                        style = MaterialTheme.typography.headlineMedium,
+                        color = Color.White,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                    Text(
+                        text = "Cocktail for you",
+                        style = MaterialTheme.typography.headlineMedium,
+                        color = PrimaryOrange,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
             }
 
             items(categories) { categoryName ->
-                // Recherche de la catégorie correspondante dans l'Enum pour les couleurs
-                val categoryEnum = Category.entries.find { Category.toString(it) == categoryName } ?: Category.OTHER
-
                 CategoryCard(
                     categoryName = categoryName,
-                    colors = Category.colors(categoryEnum),
                     onClick = { onCategoryClick(categoryName) }
                 )
             }
@@ -57,7 +66,6 @@ fun CategoriesScreen(
 @Composable
 fun CategoryCard(
     categoryName: String,
-    colors: List<Color>,
     onClick: () -> Unit
 ) {
     Card(
@@ -65,22 +73,31 @@ fun CategoryCard(
             .fillMaxWidth()
             .height(100.dp)
             .clickable(onClick = onClick),
-        shape = MaterialTheme.shapes.medium,
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        shape = MaterialTheme.shapes.extraLarge,
+        colors = CardDefaults.cardColors(containerColor = GlassWhite),
+        border = BorderStroke(1.dp, GlassBorder),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
     ) {
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Brush.horizontalGradient(colors)),
+            modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.CenterStart
         ) {
             Text(
                 text = categoryName,
                 modifier = Modifier.padding(start = 24.dp),
                 color = Color.White,
-                fontSize = 22.sp,
-                fontWeight = FontWeight.ExtraBold,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
                 style = MaterialTheme.typography.titleLarge
+            )
+            
+            // Subtle orange indicator on the left
+            Box(
+                modifier = Modifier
+                    .align(Alignment.CenterStart)
+                    .width(6.dp)
+                    .fillMaxHeight(0.4f)
+                    .background(PrimaryOrange, MaterialTheme.shapes.small)
             )
         }
     }
